@@ -1,0 +1,401 @@
+/* Base Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease; /* Smooth transition for background change */
+}
+
+/* Dark Theme Styles */
+.dark-theme {
+    background-color: #1e2a38; /* Dark background */
+    color: #ffffff; /* Light text */
+}
+
+.dark-theme .header,
+.dark-theme .sidebar,
+.dark-theme .content,
+.dark-theme .logout-button,
+.dark-theme .info-table,
+.dark-theme .info-table th,
+.dark-theme .info-table td,
+.dark-theme .course-item,
+.dark-theme .key-item,
+.dark-theme .segment-card,
+.dark-theme .segment-card-header,
+.dark-theme .data-display,
+.dark-theme .sidebar-header,
+.dark-theme .title {
+    background-color: #1e2a38; /* Darker background for contrast */
+    color: #ffffff;
+}
+
+.dark-theme .header {
+    border-bottom: 2px solid #34495e; 
+}
+
+.dark-theme .sidebar {
+    border-right: 2px solid #34495e; 
+}
+
+.dark-theme .info-table th {
+    background-color: #34495e; /* Dark header for the table */
+}
+
+.dark-theme .course-item:hover,
+.dark-theme .key-item:hover {
+    background-color: #34495e; /* Lighter hover effect */
+}
+
+.dark-theme .logout-button {
+    background-color: #ff6f61; /* Logout button color */
+}
+
+/* Light Theme Styles */
+.light-theme {
+    background-color: #f7f9fc; /* Light background */
+    color: #000000; /* Dark text */
+}
+
+.light-theme .header,
+.light-theme .sidebar,
+.light-theme .content,
+.light-theme .logout-button,
+.light-theme .info-table,
+.light-theme .info-table th,
+.light-theme .info-table td,
+.light-theme .course-item,
+.light-theme .key-item,
+.light-theme .segment-card,
+.light-theme .segment-card-header,
+.light-theme .data-display,
+.light-theme .sidebar-header,
+.light-theme .title {
+    background-color: #ffffff; /* Light background */
+    color: #000000; /* Dark text */
+}
+
+.light-theme .header {
+    border-bottom: 2px solid #ddd; 
+}
+
+.light-theme .sidebar {
+    border-right: 2px solid #ddd; 
+}
+
+.light-theme .info-table th {
+    background-color: #f0f0f0; /* Light header for the table */
+}
+
+.light-theme .course-item:hover,
+.light-theme .key-item:hover {
+    background-color: #e2e2e2; /* Lighter hover effect */
+}
+
+.light-theme .logout-button {
+    background-color: #ff6f61; /* Logout button color */
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1e2a38;
+    padding: 15px 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    width: 70px;
+    height: 70px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+}
+
+.title {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    background-color: #1e2a38;
+    color: white;
+}
+
+.logout-button {
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logout-button:hover {
+    background-color: #e65c53;
+    transform: translateY(-3px) scale(1.05);
+}
+
+.logout-button:focus {
+    outline: none;
+    box-shadow: 0 0 12px rgba(255, 111, 97, 0.6);
+}
+
+/* Sidebar Styles */
+.container {
+    display: flex;
+    margin: 20px;
+}
+
+.sidebar {
+    width: 20%;
+    padding: 20px;
+    background-color: #1e2a38; /* Darker background for contrast */
+    border-right: 2px solid #34495e;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+    color: white;
+}
+
+.sidebar-header {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #ffffff; /* Lighter color for header */
+}
+
+/* Course and Key Item Styles */
+.course-list {
+    list-style: none;
+    padding: 0;
+}
+
+.course-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.course-item:hover {
+    background-color: #34495e; /* Lighter hover effect */
+    transform: scale(1.02);
+}
+
+.course-item.active {
+    background-color: #1abc9c;
+    color: white;
+}
+
+.course-icon {
+    margin-right: 10px;
+}
+
+/* Content Styles */
+.content {
+    width: 75%;
+    padding: 20px;
+    background-color: #1e2a38;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+/* Data Display Styles */
+.data-display {
+    display: flex;
+    margin-top: 20px;
+}
+
+.left-pane {
+    width: 30%;
+    padding-right: 20px;
+}
+
+.key-item {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.key-item:hover {
+    background-color: #e2e2e2;
+}
+
+.key-item.active {
+    background-color: #1abc9c;
+    color: white;
+}
+
+.arrow-icon {
+    margin-right: 10px;
+}
+
+.right-pane {
+    width: 70%;
+}
+
+/* Segment Card Styles */
+.segment-card {
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #1e2a38;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.segment-card-header {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    background-color: #1e2a38;
+    color: white;
+}
+
+.info-section,
+.scores-section {
+    margin-bottom: 20px;
+}
+
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.info-table th,
+.info-table td {
+    padding: 10px;
+    text-align: left;
+    background-color: #1e2a38;
+    color: white;
+    border: 1px solid #ddd;
+}
+
+/* Add alternating row colors for better readability */
+.info-table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Light row for light theme */
+}
+
+.dark-theme .info-table tr:nth-child(even) {
+    background-color: #1e2a38; /* Dark row for dark theme */
+}
+
+.loading {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.error-message {
+    color: red;
+    margin-top: 20px;
+}
+
+/* Login Container Styles */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.class-dropdown {
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+select#classSelect {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    width: 200px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+select#classSelect:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-right: 30px;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
+}
+
+.google-login-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 24px;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-left: 2%;
+  }
+  
+  .google-login-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .google-login-button:hover:not(:disabled) {
+    background-color: #357ae8;
+    transform: scale(1.05);
+  }
+  
+  .google-login-button img {
+    margin-right: 10pxpx;
+    width: 20px;
+    height: 20px;
+  }
+  
+  .google-login-button:focus {
+    outline: none;
+    box-shadow: 0 0 12px rgba(66, 133, 244, 0.5);
+  }
+

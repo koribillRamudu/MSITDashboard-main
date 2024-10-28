@@ -1,0 +1,19 @@
+/* src/App.css */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.content {
+  padding: 1rem;
+}
+
+.logout-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #d9534f;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
