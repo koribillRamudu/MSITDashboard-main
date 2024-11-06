@@ -6,36 +6,92 @@ import axios from 'axios';
 import './complete.css';
 import { FaBook, FaChevronRight } from 'react-icons/fa';
 
-const Sidebar = ({ courses, selectedCourse, onSelectCourse }) => (
-  <div className="sidebar">
-    <h3 className="sidebar-header">Your Courses</h3>
-    <ul className="course-list">
-      {courses.map((course, index) => (
-        <li
-          key={index}
-          className={`course-item ${selectedCourse === course ? 'active' : ''}`}
-          onClick={() => onSelectCourse(course)}
-          role="button" // Accessibility improvement
-          tabIndex={0} // Allow keyboard navigation
-          onKeyPress={(e) => e.key === 'Enter' && onSelectCourse(course)} // Handle Enter key
-        >
-          <FaBook className="course-icon" /> {course.course_name}
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+const Sidebar = ({ courses, selectedCourse, onSelectCourse }) => {
+  const [expandedCategory, setExpandedCategory] = useState(null);
 
-const LoadingSpinner = () => (
-  <div className="loading-spinner">
-    {/* Add your spinner or loading animation here */}
-    Loading...
-  </div>
-);
+  // Group courses by category
+  const categorizedCourses = courses.reduce((acc, course) => {
+    const category = course.course_name.match(/\[(.*?)\]/)?.[1];
+    if (category) {
+      acc[category] = acc[category] || [];
+      acc[category].push(course);
+    } else {
+      acc['Other'] = acc['Other'] || []; // Add to "Other" if no category
+      acc['Other'].push(course);
+    }
+    return acc;
+  }, {});
+
+  const masterCourses = Object.values(categorizedCourses).flat().filter(course =>
+    course.course_name.includes('[Master]')
+  );
+
+  const handleCategoryClick = (category) => {
+    setExpandedCategory(prevCategory => (prevCategory === category ? null : category));
+  };
+
+  return (
+    <div className="sidebar" role="navigation" aria-label="Course Categories">
+      <h3 className="sidebar-header">Course Categories</h3>
+      
+      {masterCourses.length > 0 && (
+        <div>
+          <h4>Master Courses</h4>
+          <ul className="course-list">
+            {masterCourses.map((course, index) => (
+              <li
+                key={index}
+                className={`course-item ${selectedCourse === course ? 'active' : ''}`}
+                onClick={() => onSelectCourse(course)}
+                role="button"
+                tabIndex={0}
+                onKeyPress={(e) => e.key === 'Enter' && onSelectCourse(course)}
+              >
+                <FaBook className="course-icon" /> {course.course_name.replace(/\[.*?\]\s*/, '')}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <ul className="category-list">
+        {Object.keys(categorizedCourses).map((category, index) => (
+          <li key={index} className="category-item">
+            <div
+              onClick={() => handleCategoryClick(category)}
+              className="category-title"
+              role="button"
+              tabIndex={0}
+              onKeyPress={(e) => e.key === 'Enter' && handleCategoryClick(category)}
+            >
+              <FaChevronRight className={`arrow-icon ${expandedCategory === category ? 'expanded' : ''}`} />
+              {category}
+            </div>
+            {expandedCategory === category && (
+              <ul className="course-list">
+                {categorizedCourses[category].map((course, index) => (
+                  <li
+                    key={index}
+                    className={`course-item ${selectedCourse === course ? 'active' : ''}`}
+                    onClick={() => onSelectCourse(course)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyPress={(e) => e.key === 'Enter' && onSelectCourse(course)}
+                  >
+                    <FaBook className="course-icon" /> {course.course_name.replace(/\[.*?\]\s*/, '')}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 const Home = () => {
   const { user } = useContext(AuthContext);
-  const [selectedClass, setSelectedClass] = useState(user?.class || '');
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [userMessage, setUserMessage] = useState('');
@@ -45,8 +101,8 @@ const Home = () => {
   useEffect(() => {
     const getClasses = async () => {
       try {
-        const folders = await fetchClasses();
-        // Process fetched classes if needed
+        // Fetch classes and handle it if needed
+        await fetchClasses();
       } catch (error) {
         console.error('Error fetching classes:', error);
       }
@@ -80,91 +136,29 @@ const Home = () => {
       setData(null);
       setUserMessage('An error occurred while fetching your data. Please try again later.');
     } finally {
-      setLoading(false); // Ensure loading state is reset in finally block
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (user && selectedClass) {
-      fetchData(user.email, user.encryptedEmail, selectedClass);
+    if (user) {
+      fetchData(user.email, user.encryptedEmail, user.class);
     }
-  }, [user, selectedClass]);
+  }, [user]);
 
   const handleCourseClick = (course) => {
     setSelectedCourse(course);
     setSelectedKey('Master');
   };
 
-  const handleKeyClick = (e, key) => {
-    e.stopPropagation();
-    setSelectedKey(key);
-  };
-
-  const renderStudentInfo = (course) => (
-    <div className="info-section">
-      <h4>Student Information</h4>
-      <table className="info-table">
-        <tbody>
-          <tr>
-            <th>Email</th>
-            <td>{course.data.Master[0]?.email || 'N/A'}</td>
-          </tr>
-          <tr>
-            <th>Student Name</th>
-            <td>{course.data.Master[0]?.['Student name'] || 'N/A'}</td>
-          </tr>
-          <tr>
-            <th>Roll Number</th>
-            <td>{course.data.Master[0]?.['Roll number'] || 'N/A'}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
-
-  const renderScoresOverview = (course) => (
-    <div className="scores-section">
-      <h4>Scores Overview</h4>
-      <table className="info-table">
-        <tbody>
-          <tr>
-            <th>Participation Score</th>
-            <td>{course.data.Master[0]?.['Participation score'] || 'N/A'}</td>
-          </tr>
-          <tr>
-            <th>Actual Score</th>
-            <td>{course.data.Master[0]?.['Actual score'] || 'N/A'}</td>
-          </tr>
-          <tr>
-            <th>Total</th>
-            <td>{course.data.Master[0]?.Total || 'N/A'}</td>
-          </tr>
-          <tr>
-            <th>Grade</th>
-            <td>{course.data.Master[0]?.Grade || 'N/A'}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
-
   const renderCourseData = (course, key) => {
-    if (!course.data[key]) {
-      return <div>No data available for {key}</div>;
-    }
-
-    if (key === 'Master') {
-      return (
-        <div className="master-data">
-          {renderStudentInfo(course)}
-          {renderScoresOverview(course)}
-        </div>
-      );
-    }
+    // Check if the course data has the key
+    const courseData = course.data[key];
+    if (!courseData || courseData.length === 0) return <div>No data available</div>;
 
     return (
       <div className="vertical-table">
-        {course.data[key].map((row, rowIndex) => (
+        {courseData.map((row, rowIndex) => (
           <div key={rowIndex} className="data-row">
             <h4>{`Entry ${rowIndex + 1}`}</h4>
             <table className="info-table">
@@ -183,9 +177,9 @@ const Home = () => {
     );
   };
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
+  const handleKeyClick = (e, key) => {
+    setSelectedKey(key);
+  };
 
   return (
     <div>
@@ -200,7 +194,7 @@ const Home = () => {
           <h2>Welcome, {user?.profile?.name || 'User'}</h2>
           <p><strong>Email:</strong> {user?.email}</p>
           <p><strong>Class:</strong> {user?.class}</p>
-
+          {loading && <div className="loading-message">Loading...</div>}
           {selectedCourse && (
             <div className="data-display">
               <div className="left-pane">
@@ -209,9 +203,9 @@ const Home = () => {
                     key={idx}
                     className={`key-item ${selectedKey === key ? 'active' : ''}`}
                     onClick={(e) => handleKeyClick(e, key)}
-                    role="button" // Accessibility improvement
-                    tabIndex={0} // Allow keyboard navigation
-                    onKeyPress={(e) => e.key === 'Enter' && handleKeyClick(e, key)} // Handle Enter key
+                    role="button"
+                    tabIndex={0}
+                    onKeyPress={(e) => e.key === 'Enter' && handleKeyClick(e, key)}
                   >
                     <FaChevronRight className="arrow-icon" />
                     {key}
@@ -226,7 +220,6 @@ const Home = () => {
               </div>
             </div>
           )}
-
           {userMessage && <div className="error-message">{userMessage}</div>}
         </div>
       </div>

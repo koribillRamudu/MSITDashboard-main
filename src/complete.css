@@ -190,7 +190,7 @@ body {
 }
 
 .course-item:hover {
-    background-color: #34495e; /* Lighter hover effect */
+    background-color: rgb(40, 193, 236); /* Lighter hover effect */
     transform: scale(1.02);
 }
 
@@ -201,6 +201,30 @@ body {
 
 .course-icon {
     margin-right: 10px;
+}
+
+/* Category Styles */
+.category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-item {
+    margin-bottom: 15px;
+}
+
+.category-header {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #34495e;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.category-header:hover {
+    background-color: #2c3e50; /* Darker hover for categories */
 }
 
 /* Content Styles */
@@ -332,70 +356,56 @@ select#classSelect {
     border: 2px solid #ccc;
     width: 200px;
     outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.3s;
 }
 
 select#classSelect:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    border-color: #3498db; /* Border color change on focus */
 }
 
 button {
-    padding: 12px 20px;
-    font-size: 16px;
+    padding: 12px 30px;
     border: none;
-    border-radius: 10px;
-    background-color: #007bff;
-    color: white;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    margin-right: 30px;
+    background-color: #3498db;
+    color: white;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-left: 1%;
 }
 
 button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
+    background-color: #2980b9;
 }
 
-button:focus {
-    outline: none;
-    box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
+.button-container {
+    margin-top: 20px;
 }
 
-.google-login-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 24px;
-    background-color: #4285f4;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-left: 2%;
-  }
-  
-  .google-login-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  .google-login-button:hover:not(:disabled) {
-    background-color: #357ae8;
-    transform: scale(1.05);
-  }
-  
-  .google-login-button img {
-    margin-right: 10pxpx;
-    width: 20px;
-    height: 20px;
-  }
-  
-  .google-login-button:focus {
-    outline: none;
-    box-shadow: 0 0 12px rgba(66, 133, 244, 0.5);
-  }
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid #ddd;
+    }
+
+    .content {
+        width: 100%;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .title {
+        margin-bottom: 10px;
+    }
+}
 
