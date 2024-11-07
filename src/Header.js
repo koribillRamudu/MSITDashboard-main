@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import './complete.css';
-import { colors } from '@material-ui/core';
+// import { colors } from '@material-ui/core';
 
 const Header = () => {
   const { user, logout } = useContext(AuthContext);

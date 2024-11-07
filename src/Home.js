@@ -97,6 +97,8 @@ const Home = () => {
   const [userMessage, setUserMessage] = useState('');
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [selectedKey, setSelectedKey] = useState('Master');
+  const [selectedMonth, setSelectedMonth] = useState(null);
+  const [daysInSelectedMonth, setDaysInSelectedMonth] = useState([]);
 
   useEffect(() => {
     const getClasses = async () => {
@@ -149,13 +151,222 @@ const Home = () => {
   const handleCourseClick = (course) => {
     setSelectedCourse(course);
     setSelectedKey('Master');
+    setSelectedMonth(null);  // Reset selected month when course is changed
+    setDaysInSelectedMonth([]);  // Reset days when course is changed
+  };
+
+  const renderStudentInfo = (course) => (
+    <div className="info-section">
+      <h4>Student Information</h4>
+      <table className="info-table">
+        <tbody>
+          <tr>
+            <th>Email</th>
+            <td>{course.data.Master[0]?.email || 'N/A'}</td>
+          </tr>
+          <tr>
+            <th>Student Name</th>
+            <td>{course.data.Master[0]?.['Student name'] || 'N/A'}</td>
+          </tr>
+          <tr>
+            <th>Roll Number</th>
+            <td>{course.data.Master[0]?.['Roll number'] || 'N/A'}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+
+  const renderScoresOverview = (course) => (
+    <div className="scores-section">
+      <h4>Scores Overview</h4>
+      <table className="info-table">
+        <tbody>
+          <tr>
+            <th>Participation Score</th>
+            <td>{course.data.Master[0]?.['Participation score'] || 'N/A'}</td>
+          </tr>
+          <tr>
+            <th>Actual Score</th>
+            <td>{course.data.Master[0]?.['Actual score'] || 'N/A'}</td>
+          </tr>
+          <tr>
+            <th>Total</th>
+            <td>{course.data.Master[0]?.Total || 'N/A'}</td>
+          </tr>
+          <tr>
+            <th>Grade</th>
+            <td>{course.data.Master[0]?.Grade || 'N/A'}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+
+  const handleMonthClick = (month, course, key) => {
+    setSelectedMonth(month);
+    const days = [];
+    const monthData = course.data[key];
+  
+    if (!monthData) {
+      console.error("No data for the selected key.");
+      return; // Exit if no data is available for the selected key
+    }
+  
+    const monthAbbr = month.substring(0, 3); // e.g., "Oct"
+    console.log("monthAbbr: ", monthAbbr);
+  
+    // Store all keys from entries in a list
+    const allKeys = [];
+  
+    monthData.forEach(entry => {
+      if (typeof entry !== 'object') {
+        console.error("Entry is not an object", entry);
+        return;
+      }
+  
+      // Collect all keys in the current entry
+      const keysInEntry = Object.keys(entry);
+      allKeys.push(...keysInEntry);
+    });
+  
+    console.log("All Keys:", allKeys);
+  
+    const dateRegex = /^[A-Za-z]{3}, [A-Za-z]{3} \d{1,2}, \d{4}$/;
+  
+    allKeys.forEach(dateKey => {
+      if (dateRegex.test(dateKey)) {
+        const dateParts = dateKey.split(' '); 
+        const keyMonthAbbr = dateParts[1];
+  
+        if (keyMonthAbbr === monthAbbr) {
+          monthData.forEach(entry => {
+            if (entry[dateKey]) {
+              days.push({ date: dateKey, value: entry[dateKey] });
+            }
+          });
+        }
+      }
+    });
+  
+    console.log("Entries in Selected Month with Values:", days); 
+    setDaysInSelectedMonth(days); 
   };
 
   const renderCourseData = (course, key) => {
-    // Check if the course data has the key
     const courseData = course.data[key];
     if (!courseData || courseData.length === 0) return <div>No data available</div>;
 
+    if (key === 'Master') {
+      return (
+          <div className="master-data">
+              {renderStudentInfo(course)}
+              {renderScoresOverview(course)}
+          </div>
+      );
+  }
+
+    console.log("course:", course)
+    if (course.course_name === 'Attendance' && course.data[key] !== 'Master' && course.data[key] !== 'Score scale') {
+      console.log("hello: ", courseData);
+      // Handle attendance data and month counts here...
+      const getFullMonthFromDate = (dateStr) => {
+        const monthMap = {
+            'Jan': 'January',
+            'Feb': 'February',
+            'Mar': 'March',
+            'Apr': 'April',
+            'May': 'May',
+            'Jun': 'June',
+            'Jul': 'July',
+            'Aug': 'August',
+            'Sep': 'September',
+            'Oct': 'October',
+            'Nov': 'November',
+            'Dec': 'December',
+        };
+        const monthAbbr = dateStr.split(' ')[1]; // Get the short month
+        return monthMap[monthAbbr] || monthAbbr; // Return full month name or abbreviation if not found
+    };
+
+    // Create a map to store counts of "1"s for each month
+    const monthCounts = new Map();
+
+    // Iterate over date keys to populate the unique months and count "1"s
+    course.data[key].forEach((entry) => {
+        Object.keys(entry).forEach((date) => {
+            if (date.includes(',')) { // Basic check for date format
+                const month = getFullMonthFromDate(date);
+                const value = entry[date];
+
+                // Initialize or increment the count of "1"s for this month
+                if (!monthCounts.has(month)) {
+                    monthCounts.set(month, 0);
+                }
+                if (value === "1") {
+                    monthCounts.set(month, monthCounts.get(month) + 1);
+                }
+            }
+        });
+    });
+
+    // Convert monthCounts map to an array to display the months with counts
+    const monthList = Array.from(monthCounts.entries());
+
+    // Display the unique months as links in a list format, with count of "1"s beside each month
+    return (
+      <div className="vertical-table">
+      <div className="month-links">
+        <table className="month-table">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Class Attended</th>
+            </tr>
+          </thead>
+          <tbody>
+            {monthList.map(([month, countOfOnes], index) => (
+              <tr key={index}>
+                <td>
+                  <a href="#" className="month-link" onClick={() => handleMonthClick(month, course, key)}>
+                    {month}
+                  </a>
+                </td>
+                <td>{selectedMonth === month}</td>
+                <td>{countOfOnes}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    
+      {selectedMonth && (
+        <div className="days-list">
+          <h3>{selectedMonth}</h3>
+    
+          {/* Table to display entries in the selected month */}
+          <table className="info-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              {daysInSelectedMonth.map((entry, index) => (
+                <tr key={index}>
+                  <td>{entry.date}</td>
+                  <td>{entry.value || 'N/A'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+    
+    );
+    }
     return (
       <div className="vertical-table">
         {courseData.map((row, rowIndex) => (
@@ -177,8 +388,11 @@ const Home = () => {
     );
   };
 
+
   const handleKeyClick = (e, key) => {
     setSelectedKey(key);
+    setSelectedMonth(null); // Reset selected month when course is changed
+    setDaysInSelectedMonth([]); // Reset days list
   };
 
   return (
