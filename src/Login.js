@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
 import { AuthContext } from './AuthContext';
 import Header from './Header';
-import './complete.css';
+import './Login.css';
 import axios from 'axios';
 import { fetchClasses, encryptEmail } from './utils';
 
@@ -84,7 +84,7 @@ const Login = () => {
           </select>
         </div>
         <button onClick={() => googleLogin()} className="google-login-button" disabled={!selectedClass}>
-          <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" />
+          <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo"/>
           Login with Google
         </button>
       </div>
