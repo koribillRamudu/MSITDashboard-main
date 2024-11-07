@@ -258,12 +258,35 @@ const Home = () => {
     if (!courseData || courseData.length === 0) return <div>No data available</div>;
 
     if (key === 'Master') {
-      return (
-          <div className="master-data">
-              {renderStudentInfo(course)}
-              {renderScoresOverview(course)}
-          </div>
-      );
+      // Extract data from the Master entry
+    const masterData = course.data[key][0]; // Assuming 'Master' data is an array with one entry
+    if (!masterData) return <div>No Master data available</div>;
+
+    // Extract required fields
+    const { email, 'Student name': studentName, 'Roll number': rollNumber, ...scores } = masterData;
+    
+    // Render Master data
+    return (
+      <div className="master-data">
+        <h4>Master Data</h4>
+        <table className="info-table">
+          <tbody>
+            
+            <tr>
+              <th>Roll Number</th>
+              <td>{rollNumber || 'N/A'}</td>
+            </tr>
+            {/* Render the mastery scores dynamically */}
+            {Object.entries(scores).map(([scoreType, scoreValue], index) => (
+              <tr key={index}>
+                <th>{scoreType}</th>
+                <td>{scoreValue || 'N/A'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
   }
 
     console.log("course:", course)
