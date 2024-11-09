@@ -263,7 +263,7 @@ const Home = () => {
     if (!masterData) return <div>No Master data available</div>;
 
     // Extract required fields
-    const { email, 'Student name': studentName, 'Roll number': rollNumber, ...scores } = masterData;
+    const {'Roll number': rollNumber, ...scores } = masterData;
     
     // Render Master data
     return (

@@ -32,9 +32,9 @@ const Header = () => {
       <h1 className="title">Dashboard</h1>
       <button onClick={toggleTheme} className="theme-toggle-button">
         {isDarkTheme ? (
-          <span role="img" aria-label="Light Mode">☀️ Light Mode</span>
+          <span role="img" aria-label="Light Mode">☀️</span>
         ) : (
-          <span role="img" aria-label="Dark Mode">🌙 Dark Mode</span>
+          <span role="img" aria-label="Dark Mode">🌙</span>
         )}
       </button>
       
