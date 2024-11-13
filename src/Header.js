@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import './complete.css';
+// import { colors } from '@material-ui/core';
 
 const Header = () => {
   const { user, logout } = useContext(AuthContext);
@@ -26,7 +27,7 @@ const Header = () => {
         <Link to="/home">
           <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" className="logo" />
         </Link>
-        <h1 className="title mx-auto">Dashboard</h1>
+        <h1 className="title mx-auto"><center>Dashboard</center></h1>
       </div>
       <div className="d-flex align-items-center justify-content-end">
         <button onClick={toggleTheme} className="theme-toggle-button">
