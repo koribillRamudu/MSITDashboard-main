@@ -22,21 +22,22 @@ const Header = () => {
   };
 
   return (
-    <header className="header container-fluid">
-      <div className="d-flex align-items-center">
-        <Link to="/home">
-          <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" className="logo" />
-        </Link>
-        <h1 className="title mx-auto"><center>Dashboard</center></h1>
-      </div>
-      <div className="d-flex align-items-center justify-content-end">
-        <button onClick={toggleTheme} className="theme-toggle-button">
-          {isDarkTheme ? '☀️ Light Mode' : '🌙 Dark Mode'}
-        </button>
-        {user && (
-          <button onClick={handleLogout} className="logout-button">Logout</button>
+    <header className="header">
+      <Link to="/home">
+        <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" className="logo" />
+      </Link>
+      <h1 className="title">Dashboard</h1>
+      <button onClick={toggleTheme} className="theme-toggle-button">
+        {isDarkTheme ? (
+          <span role="img" aria-label="Light Mode">☀️</span>
+        ) : (
+          <span role="img" aria-label="Dark Mode">🌙</span>
         )}
-      </div>
+      </button>
+      
+      {user && (
+        <button onClick={handleLogout} className="logout-button">Logout</button>
+      )}
     </header>
   );
 };
