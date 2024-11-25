@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import { AuthProvider, AuthContext } from './AuthContext';
 import Login from './Login';
 import Home from './Home';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const App = () => {
   return (

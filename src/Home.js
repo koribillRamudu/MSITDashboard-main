@@ -227,7 +227,7 @@ const Home = () => {
     }
   
     const monthAbbr = month.substring(0, 3); // e.g., "Oct"
-    console.log("monthAbbr: ", monthAbbr);
+    // console.log("monthAbbr: ", monthAbbr);
   
     // Store all keys from entries in a list
     const allKeys = [];
@@ -262,7 +262,7 @@ const Home = () => {
       }
     });
   
-    console.log("Entries in Selected Month with Values:", days); 
+    // console.log("Entries in Selected Month with Values:", days); 
     setDaysInSelectedMonth(days); 
   };
 
@@ -353,7 +353,7 @@ const Home = () => {
     return (
       <div className="vertical-table">
       <div className="month-links">
-        <table className="month-table">
+        <table className="info-table">
           <thead>
             <tr>
               <th>Month</th>
@@ -368,7 +368,6 @@ const Home = () => {
                     {month}
                   </a>
                 </td>
-                <td>{selectedMonth === month}</td>
                 <td>{countOfOnes}</td>
               </tr>
             ))}

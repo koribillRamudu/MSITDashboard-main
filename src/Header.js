@@ -8,11 +8,8 @@ import './complete.css';
 const Header = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  // State to track the current theme
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
-  // Toggle theme function
   const toggleTheme = () => {
     setIsDarkTheme((prevTheme) => !prevTheme);
     document.body.classList.toggle('dark-theme');
