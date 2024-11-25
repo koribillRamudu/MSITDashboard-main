@@ -1,0 +1,124 @@
+/* General styles for the page */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f8ff; /* Light background for contrast */
+  padding: 20px; /* Added padding for smaller screens */
+}
+
+/* Styles for the login box */
+.login-box {
+  padding: 40px;
+  background: linear-gradient(135deg, #ffffff, #dfe9f3);
+  border-radius: 15px;
+  width: 450px; /* Default width for larger screens */
+  max-width: 100%; /* Ensure it doesn't exceed the viewport width */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 0 -5px 15px rgba(255, 255, 255, 0.2);
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.login-box:hover {
+  transform: scale(1.02);
+}
+
+/* Dropdown styling */
+.class-dropdown select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 25px;
+  border: 1px solid #cfd8e3;
+  border-radius: 8px;
+  background-color: #f5f9fd;
+  color: #333;
+  font-size: 16px;
+  outline: none;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1) inset;
+  transition: background-color 0.3s ease;
+}
+
+.class-dropdown select:hover {
+  background-color: #e7f0fa;
+}
+
+/* Google login button styling */
+.google-login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 14px;
+  background-color: #4285f4;
+  font-size: 17px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+.google-login-button:hover {
+  background-color: #357ae8;
+  transform: translateY(-3px);
+}
+
+.google-login-button:disabled {
+  background-color: #a0c1f7;
+  cursor: not-allowed;
+}
+
+.google-login-button img {
+  margin-right: 10px;
+  height: 25px;
+}
+
+/* Loading and error messages */
+.loading-container, .error-message {
+  color: #333;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+/* Responsive Design */
+
+/* For screens smaller than 768px */
+@media (max-width: 768px) {
+  .login-box {
+    width: 90%; /* Reduce width to fit smaller screens */
+    padding: 20px; /* Adjust padding for better fit */
+  }
+
+  .google-login-button {
+    font-size: 15px; /* Reduce font size for smaller screens */
+    padding: 12px; /* Adjust padding */
+  }
+
+  .google-login-button img {
+    height: 20px; /* Scale down Google logo */
+  }
+
+  .class-dropdown select {
+    font-size: 14px; /* Reduce font size */
+    padding: 10px; /* Adjust padding */
+  }
+}
+
+/* For screens smaller than 480px */
+@media (max-width: 480px) {
+  .login-box {
+    padding: 15px; /* Further reduce padding */
+  }
+
+  .google-login-button {
+    font-size: 14px; /* Smaller font for very small screens */
+    padding: 10px;
+  }
+
+  .class-dropdown select {
+    font-size: 13px; /* Smaller font for dropdown */
+  }
+}

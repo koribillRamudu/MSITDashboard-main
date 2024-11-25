@@ -131,7 +131,7 @@ body {
     background-color: #ff6f61;
     color: white;
     border: none;
-    padding: 12px 24px;
+    padding: 10px 20px;
     border-radius: 30px;
     cursor: pointer;
     font-size: 16px;
@@ -169,7 +169,7 @@ body {
 .sidebar-header {
     font-size: 1.8em;
     margin-bottom: 20px;
-    text-align: center;
+    text-align: left;
     color: #ffffff; /* Lighter color for header */
 }
 
@@ -203,6 +203,62 @@ body {
     margin-right: 10px;
 }
 
+/* Wrapper for the header or navbar where both buttons are located */
+.theme-toggle-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    gap: 20px; /* Gap between elements (toggle and logout) */
+}
+
+/* Styling for the theme toggle button (round button) */
+.theme-toggle-button {
+    background-color: #1e2a38; /* Dark theme background */
+    color: white; /* Text color */
+    border: none;
+    padding: 8px; /* Slightly bigger padding for better circle */
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 50%; /* Round button */
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    width: 40px;
+    height: 40px;
+}
+
+.theme-toggle-button:hover {
+    background-color: #34495e; /* Hover effect for dark theme */
+    transform: scale(1.05);
+}
+
+.theme-toggle-button:focus {
+    outline: none;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+}
+
+/* Light Theme Button Styles */
+.light-theme .theme-toggle-button {
+    background-color: #ffffff; /* Light theme background */
+    color: #333; /* Text color */
+}
+
+.light-theme .theme-toggle-button:hover {
+    background-color: #f0f0f0; /* Light hover effect */
+}
+
+/* Icon Styles */
+.theme-toggle-button span {
+    font-size: 1.4rem;
+    transition: transform 0.2s ease;
+}
+
+.theme-toggle-button span:hover {
+    transform: scale(1.2); /* Slightly enlarge the icon on hover */
+}
 /* Category Styles */
 .category-list {
     list-style: none;
@@ -360,105 +416,66 @@ select#classSelect {
 }
 
 select#classSelect:focus {
-    border-color: #3498db; /* Border color change on focus */
+    border-color: #1abc9c;
 }
-
-button {
-    padding: 12px 30px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #3498db;
-    color: white;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    margin-left: 1%;
-}
-
-button:hover {
-    background-color: #2980b9;
-}
-
-.button-container {
-    margin-top: 20px;
-}
-/* Theme Toggle Button - Circular Shape */
-/* Theme Toggle Button - Circular Shape */
-.theme-toggle-button {
-    width: 40px; /* Set a fixed width */
-    height: 40px; /* Set height equal to width */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%; /* Makes the button circular */
-    border: none;
-    background-color: #3498db; /* Background color */
-    color: white;
-    cursor: pointer;
-    font-size: 20px; /* Adjust size of the icon */
-    transition: background-color 0.3s, transform 0.2s;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    padding: 0; /* Ensure no extra space */
-    margin: 0; /* Remove any default margin */
-}
-
-
-.theme-toggle-button:hover {
-    background-color: #2980b9; /* Slightly darker shade on hover */
-    transform: scale(1.1);
-}
-
-.google-login-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 20px; /* Adjusts height and width */
-    font-size: 16px;
-    font-weight: bold;
-    color: #444;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.google-login-button img {
-    width: 20px; /* Adjusts logo size */
-    height: 20px;
-    margin-right: 8px; /* Space between logo and text */
-}
-
-.google-login-button:hover {
-    background-color: #f5f5f5;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-
-/* Responsive Styles */
-@media (max-width: 768px) {
+/* Media Queries for responsiveness */
+@media screen and (max-width: 768px) {
     .container {
         flex-direction: column;
     }
 
     .sidebar {
         width: 100%;
-        border-right: none;
-        border-bottom: 2px solid #ddd;
+        margin-bottom: 20px;
     }
 
     .content {
         width: 100%;
     }
 
+    /* Header Styles */
     .header {
         flex-direction: column;
-        align-items: flex-start;
+        padding: 10px;
     }
 
-    .title {
-        margin-bottom: 10px;
+    /* Sidebar Styles */
+    .sidebar-header {
+        font-size: 1.5em;
+    }
+
+    /* Course and Key Item Styles */
+    .course-item {
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+
+    /* Data Display Styles */
+    .data-display {
+        flex-direction: column;
+    }
+
+    .left-pane, .right-pane {
+        width: 100%;
+        padding-right: 0;
+    }
+
+    /* Segment Card Styles */
+    .segment-card {
+        padding: 10px;
+    }
+
+    /* Info Table Styles */
+    .info-table th,
+    .info-table td {
+        padding: 8px;
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle-button {
+        width: 40px;
+        height: 40px;
+        padding: 10px;
+        font-size: 1.2rem;
     }
 }
-
