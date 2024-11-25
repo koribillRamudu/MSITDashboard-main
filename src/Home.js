@@ -22,18 +22,28 @@ const Sidebar = ({ courses, selectedCourse, onSelectCourse }) => {
     return acc;
   }, {});
 
-  const masterCourses = Object.values(categorizedCourses).flat().filter(course =>
-    course.course_name.includes('[Master]')
-  );
+  // Sort the categories alphabetically
+  const sortedCategories = Object.keys(categorizedCourses).sort();
+
+  // Sort courses within each category alphabetically
+  sortedCategories.forEach((category) => {
+    categorizedCourses[category] = categorizedCourses[category].sort((a, b) =>
+      a.course_name.localeCompare(b.course_name)
+    );
+  });
+
+  const masterCourses = Object.values(categorizedCourses)
+    .flat()
+    .filter((course) => course.course_name.includes('[Master]'));
 
   const handleCategoryClick = (category) => {
-    setExpandedCategory(prevCategory => (prevCategory === category ? null : category));
+    setExpandedCategory((prevCategory) => (prevCategory === category ? null : category));
   };
 
   return (
     <div className="sidebar" role="navigation" aria-label="Course Categories">
       <h3 className="sidebar-header">Course Categories</h3>
-      
+
       {masterCourses.length > 0 && (
         <div>
           <h4>Master Courses</h4>
@@ -55,7 +65,7 @@ const Sidebar = ({ courses, selectedCourse, onSelectCourse }) => {
       )}
 
       <ul className="category-list">
-        {Object.keys(categorizedCourses).map((category, index) => (
+        {sortedCategories.map((category, index) => (
           <li key={index} className="category-item">
             <div
               onClick={() => handleCategoryClick(category)}
@@ -64,7 +74,9 @@ const Sidebar = ({ courses, selectedCourse, onSelectCourse }) => {
               tabIndex={0}
               onKeyPress={(e) => e.key === 'Enter' && handleCategoryClick(category)}
             >
-              <FaChevronRight className={`arrow-icon ${expandedCategory === category ? 'expanded' : ''}`} />
+              <FaChevronRight
+                className={`arrow-icon ${expandedCategory === category ? 'expanded' : ''}`}
+              />
               {category}
             </div>
             {expandedCategory === category && (
@@ -89,6 +101,7 @@ const Sidebar = ({ courses, selectedCourse, onSelectCourse }) => {
     </div>
   );
 };
+
 
 const Home = () => {
   const { user } = useContext(AuthContext);

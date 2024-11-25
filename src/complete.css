@@ -168,6 +168,7 @@ body {
 
 .sidebar-header {
     font-size: 1.8em;
+    margin-left: -97px;
     margin-bottom: 20px;
     text-align: center;
     color: #ffffff; /* Lighter color for header */

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
 import { AuthContext } from './AuthContext';
 import Header from './Header';
-import './complete.css';
+import './Login.css';
 import axios from 'axios';
 import { fetchClasses, encryptEmail } from './utils';
 
@@ -41,7 +41,7 @@ const Login = () => {
         const userInfoResponse = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
           headers: {
             Authorization: `Bearer ${tokenResponse.access_token}`,
-          },
+          }        
         });
         const profile = userInfoResponse.data;
         const encryptedEmail = encryptEmail(profile.email);
@@ -75,18 +75,20 @@ const Login = () => {
     <div>
       <Header />
       <div className="login-container">
-        <div className="class-dropdown">
-          <select id="classSelect" value={selectedClass} onChange={handleClassChange}>
-            <option value="" disabled>Select your class</option>
-            {classes.map((className, index) => (
-              <option key={index} value={className}>{className}</option>
-            ))}
-          </select>
+        <div className="login-box">
+          <div className="class-dropdown">
+            <select id="classSelect" value={selectedClass} onChange={handleClassChange}>
+              <option value="" disabled>Select your class</option>
+              {classes.map((className, index) => (
+                <option key={index} value={className}>{className}</option>
+              ))}
+            </select>
+          </div>
+          <button onClick={() => googleLogin()} className="google-login-button" disabled={!selectedClass}>
+            <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo"/>
+            Login with Google
+          </button>
         </div>
-        <button onClick={() => googleLogin()} className="google-login-button" disabled={!selectedClass}>
-          <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" />
-          Login with Google
-        </button>
       </div>
     </div>
   );
