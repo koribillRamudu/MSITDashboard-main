@@ -90,10 +90,7 @@ const Login = () => {
           </button>
         </div>
 
-        <button onClick={() => googleLogin()} className="google-login-button" disabled={!selectedClass}>
-          <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo"/>
-          Login with Google
-        </button>
+        
       </div>
     </div>
   );
