@@ -1,4 +1,4 @@
-
+<<<<<<< HEAD
 /* General styles for the page */
 .login-container {
   display: flex;
@@ -107,7 +107,19 @@
   .class-dropdown select {
     font-size: 13px; /* Smaller font for dropdown */
   }
+/* src/Login.css */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 100px); /* Adjust based on header height */
+}
 
+.class-dropdown {
+  margin-bottom: 20px;
+  text-align: center;
+}
 
 .class-dropdown label {
   display: block;
@@ -133,5 +145,15 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+}
+
+.google-login-button img {
+  width: 20px;
+  margin-right: 10px;
+}
+
+.google-login-button:disabled {
+  background-color: #c0c0c0;
+  cursor: not-allowed;
 }
 }
