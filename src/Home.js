@@ -8,17 +8,35 @@ import { FaBook, FaChevronRight } from 'react-icons/fa';
 
 const Sidebar = ({ courses, selectedCourse, onSelectCourse }) => {
   const [expandedCategory, setExpandedCategory] = useState(null);
+  const [filteredCourses, setFilteredCourses] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate a loading process for courses
+    setTimeout(() => {
+      const validCourses = courses.filter(
+        (course) =>
+          course.data &&
+          course.data.Master &&
+          course.data.Master[0] &&
+          course.data.Master[0]['Roll number']
+      );
+      setFilteredCourses(validCourses);
+      setIsLoading(false); // Mark loading as complete
+    }, 1000); // Simulated delay
+  }, [courses]);
+
+  if (isLoading) {
+    return <div className="sidebar">Loading courses...</div>;
+  }
+
+  
 
   // Group courses by category
-  const categorizedCourses = courses.reduce((acc, course) => {
-    const category = course.course_name.match(/\[(.*?)\]/)?.[1];
-    if (category) {
-      acc[category] = acc[category] || [];
-      acc[category].push(course);
-    } else {
-      acc['Other'] = acc['Other'] || []; // Add to "Other" if no category
-      acc['Other'].push(course);
-    }
+  const categorizedCourses = filteredCourses.reduce((acc, course) => {
+    const category = course.course_name.match(/\[(.*?)\]/)?.[1] || 'Other';
+    acc[category] = acc[category] || [];
+    acc[category].push(course);
     return acc;
   }, {});
 
@@ -138,11 +156,16 @@ const Home = () => {
           'Content-Type': 'application/json',
         },
       });
-
       if (response.status === 200) {
+        if(response.data[0]['data']['Master'].length === 0){
+        setUserMessage('You are not part of this class. Please reach out to the LMS team for assistance.');
+      }else {
         setData(response.data);
         setUserMessage('');
-      } else {
+      }
+      } 
+      
+      else {
         setData(null);
         setUserMessage('Your data is not present in the requested class. Contact LMS team.');
       }
@@ -268,7 +291,7 @@ const Home = () => {
 
   const renderCourseData = (course, key) => {
     const courseData = course.data[key];
-    if (!courseData || courseData.length === 0) return <div>No data available</div>;
+    if (!courseData || courseData.length === 0) return <div>you are not belong to this class please select the correct class</div>;
 
     if (key === 'Master') {
       // Extract data from the Master entry
@@ -469,7 +492,12 @@ const Home = () => {
               </div>
             </div>
           )}
-          {userMessage && <div className="error-message">{userMessage}</div>}
+          {userMessage && (
+  <div style={{ color: 'red', marginTop: '20px', fontSize: '16px', fontWeight: 'bold' }}>
+    {userMessage}
+  </div>
+)}
+
         </div>
       </div>
     </div>
